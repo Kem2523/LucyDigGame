@@ -10,11 +10,15 @@ export default class Lucy {
     this.currentMovingDirection = null;
     this.requestedMovingDirection = null;
 
+    this.lucyAnimationTimerDefault = 10;
+    this.lucyAnimationTimer = null;
+
     document.addEventListener("keydown", this.#keydown);
     this.#loadLucyImages();
   }
   draw(ctx) {
     this.#move();
+    this.#animate();
     ctx.drawImage(
       this.lucyImages[this.lucyImageIndex],
       this.x,
@@ -92,6 +96,11 @@ export default class Lucy {
       )
     ) {
       return;
+    } else if (
+      this.currentMovingDirection != null &&
+      this.lucyAnimationTimer == null
+    ) {
+      this.lucyAnimationTimer = this.lucyAnimationTimerDefault;
     }
 
     switch (this.currentMovingDirection) {
@@ -107,6 +116,19 @@ export default class Lucy {
       case MovingDirection.right:
         this.x += this.velocity;
         break;
+    }
+  }
+
+  #animate() {
+    if (this.lucyAnimationTimer == null) {
+      return;
+    }
+    this.lucyAnimationTimer--;
+    if (this.lucyAnimationTimer == 0) {
+      this.lucyAnimationTimer = this.lucyAnimationTimerDefault;
+      this.lucyImageIndex++;
+      if (this.lucyImageIndex == this.lucyImages.length)
+        this.lucyImageIndex = 0;
     }
   }
 }
