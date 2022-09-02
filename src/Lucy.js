@@ -39,7 +39,7 @@ export default class Lucy {
 
     this.lucyImages = [lucyImage1, lucyImage2, lucyImage3, lucyImage4];
 
-    this.lucyImageIndex = 2;
+    this.lucyImageIndex = 3;
   }
   #keydown = (event) => {
     //up
@@ -73,18 +73,18 @@ export default class Lucy {
         Number.isInteger(this.x / this.tileSize) &&
         Number.isInteger(this.y / this.tileSize)
       ) {
-        if (
-          !this.tileMap.didCollideWithEnvironment(
-            this.x,
-            this.y,
-            this.requestedMovingDirection
-          )
-        )
+        // if (
+        //   !this.tileMap.didCollideWithEnvironment(
+        //     this.x,
+        //     this.y,
+        //     this.requestedMovingDirection
+        //   )
+        // )
           this.currentMovingDirection = this.requestedMovingDirection;
       }
     }
 
-if(this.tileMap.didCollideWithEnvironment(this.x, this.y, this.currentMovingDirection))
+// if(this.tileMap.didCollideWithEnvironment(this.x, this.y, this.currentMovingDirection))
 
     switch (this.currentMovingDirection) {
       case MovingDirection.up:
