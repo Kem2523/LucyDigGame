@@ -12,20 +12,47 @@ export default class Lucy {
 
     this.lucyAnimationTimerDefault = 10;
     this.lucyAnimationTimer = null;
+    
+    this.lucyRotation = this.Rotation.right;
+  
 
     document.addEventListener("keydown", this.#keydown);
     this.#loadLucyImages();
   }
+
+  Rotation = {
+    right: 0,
+    down: 1,
+    left: 2,
+    up: 3,
+
+  };
+
   draw(ctx) {
     this.#move();
     this.#animate();
+
+    const size = this.tileSize / 2;
+
+    ctx.save();
+    ctx.translate(this.x + size, this.y + size);
+    ctx.rotate((this.lucyRotation * 90 * Math.PI) / 180);
     ctx.drawImage(
-      this.lucyImages[this.lucyImageIndex],
-      this.x,
-      this.y,
-      this.tileSize,
+      this.lucyImages[this.lucyImageIndex], 
+      -size, 
+      -size, 
+      this.tileSize, 
       this.tileSize
-    );
+      );
+
+    ctx.restore();
+    // ctx.drawImage(
+    //   this.lucyImages[this.lucyImageIndex],
+    //   this.x,
+    //   this.y,
+    //   this.tileSize,
+    //   this.tileSize
+    // );
   }
 
   #loadLucyImages() {
@@ -95,6 +122,8 @@ export default class Lucy {
         this.currentMovingDirection
       )
     ) {
+      this.lucyAnimationTimer = null;
+      this.lucyImageIndex = 1;
       return;
     } else if (
       this.currentMovingDirection != null &&
@@ -106,15 +135,19 @@ export default class Lucy {
     switch (this.currentMovingDirection) {
       case MovingDirection.up:
         this.y -= this.velocity;
+        this.lucyRotation = this.Rotation.up;
         break;
       case MovingDirection.down:
         this.y += this.velocity;
+        this.lucyRotation = this.Rotation.down;
         break;
       case MovingDirection.left:
         this.x -= this.velocity;
+        this.lucyRotation = this.Rotation.left;
         break;
       case MovingDirection.right:
         this.x += this.velocity;
+        this.lucyRotation = this.Rotation.right;
         break;
     }
   }
