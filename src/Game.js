@@ -1,6 +1,7 @@
 import TileMap from "./TileMap.js";
 
 const tileSize = 32;
+//velocity makes the character speed change
 const velocity = 2;
 
 const canvas = document.getElementById("gameCanvas");

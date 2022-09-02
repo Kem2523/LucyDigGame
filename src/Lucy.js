@@ -73,18 +73,26 @@ export default class Lucy {
         Number.isInteger(this.x / this.tileSize) &&
         Number.isInteger(this.y / this.tileSize)
       ) {
-        // if (
-        //   !this.tileMap.didCollideWithEnvironment(
-        //     this.x,
-        //     this.y,
-        //     this.requestedMovingDirection
-        //   )
-        // )
+        if (
+          !this.tileMap.didCollideWithEnvironment(
+            this.x,
+            this.y,
+            this.requestedMovingDirection
+          )
+        )
           this.currentMovingDirection = this.requestedMovingDirection;
       }
     }
 
-// if(this.tileMap.didCollideWithEnvironment(this.x, this.y, this.currentMovingDirection))
+    if (
+      this.tileMap.didCollideWithEnvironment(
+        this.x,
+        this.y,
+        this.currentMovingDirection
+      )
+    ) {
+      return;
+    }
 
     switch (this.currentMovingDirection) {
       case MovingDirection.up:

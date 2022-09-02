@@ -1,5 +1,6 @@
 import Lucy from "./Lucy.js";
 import MovingDirection from "./MovingDirection.js";
+
 export default class TileMap {
   constructor(tileSize) {
     this.tileSize = tileSize;
@@ -15,7 +16,7 @@ export default class TileMap {
   }
 
   map = [
-    [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
+    [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     [1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2],
@@ -98,9 +99,6 @@ export default class TileMap {
   }
 
   didCollideWithEnvironment(x, y, direction) {
-    if(direction = null){
-        return;
-    }
     
     if (
       Number.isInteger(x / this.tileSize) &&
