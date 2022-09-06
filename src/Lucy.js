@@ -14,6 +14,7 @@ export default class Lucy {
     this.lucyAnimationTimer = null;
     
     this.lucyRotation = this.Rotation.right;
+    this.lucyBarkSound = new Audio('../sounds/lucyBarking.mp3')
   
 
     document.addEventListener("keydown", this.#keydown);
@@ -31,6 +32,7 @@ export default class Lucy {
   draw(ctx) {
     this.#move();
     this.#animate();
+    this.#getBone();
 
     const size = this.tileSize / 2;
 
@@ -162,6 +164,14 @@ export default class Lucy {
       this.lucyImageIndex++;
       if (this.lucyImageIndex == this.lucyImages.length)
         this.lucyImageIndex = 0;
+    }
+  }
+  #getBone(){
+    if(this.tileMap.getBone(this.x, this.y)){
+
+      //play sound
+      this.lucyBarkSound.play();
+
     }
   }
 }
