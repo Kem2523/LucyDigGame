@@ -13,7 +13,10 @@ const enemies = tileMap.getEnemies(velocity);
 function gameLoop() {
   tileMap.draw(ctx);
   lucy.draw(ctx);
-  enemies.forEach((enemy) => enemy.draw(ctx));
+  enemies.forEach((enemy) => enemy.draw(ctx, pause()));
+}
+function pause(){
+  return !lucy.madeFirstMove
 }
 tileMap.setCanvasSize(canvas);
 setInterval(gameLoop, 1000 / 75);

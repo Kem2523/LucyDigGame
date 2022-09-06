@@ -16,6 +16,7 @@ export default class Lucy {
     this.lucyRotation = this.Rotation.right;
     this.lucyBarkSound = new Audio('../sounds/lucyBarking.mp3')
   
+    this.madeFirstMove = false;
 
     document.addEventListener("keydown", this.#keydown);
     this.#loadLucyImages();
@@ -80,24 +81,28 @@ export default class Lucy {
       if (this.currentMovingDirection == MovingDirection.down)
         this.currentMovingDirection = MovingDirection.up;
       this.requestedMovingDirection = MovingDirection.up;
+      this.madeFirstMove = true;
     }
     //down
     if (event.keyCode == 40) {
       if (this.currentMovingDirection == MovingDirection.up)
         this.currentMovingDirection = MovingDirection.down;
       this.requestedMovingDirection = MovingDirection.down;
+      this.madeFirstMove = true;
     }
     //left
     if (event.keyCode == 37) {
       if (this.currentMovingDirection == MovingDirection.right)
         this.currentMovingDirection = MovingDirection.left;
       this.requestedMovingDirection = MovingDirection.left;
+      this.madeFirstMove = true;
     }
     //right
     if (event.keyCode == 39) {
       if (this.currentMovingDirection == MovingDirection.left)
         this.currentMovingDirection = MovingDirection.right;
       this.requestedMovingDirection = MovingDirection.right;
+      this.madeFirstMove = true;
     }
   };
   #move() {
