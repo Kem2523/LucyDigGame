@@ -1,5 +1,5 @@
 import Lucy from "./Lucy.js";
-import Enemy from "./Enemy.js"
+import Enemy from "./Enemy.js";
 import MovingDirection from "./MovingDirection.js";
 
 export default class TileMap {
@@ -9,11 +9,21 @@ export default class TileMap {
     this.dirt = new Image();
     this.dirt.src = "../images/dirt2.png";
 
+    this.tennisGlow = new Image();
+    this.tennisGlow.src = "../images/tennisGlow.png";
+   
+    this.tennisBall = new Image();
+    this.tennisBall.src= "../images/tennisBall.png"
+
     this.dirtGrass = new Image();
     this.dirtGrass.src = "../images/dirtGrass.png";
 
     this.bone = new Image();
     this.bone.src = "../images/bone.png";
+
+    this.powerBall = this.tennisGlow;
+    this.powerBallAnimationTimerDefault = 60;
+    this.powerBallAnimationTimer = this.powerBallAnimationTimerDefault;
   }
 
   map = [
@@ -22,13 +32,13 @@ export default class TileMap {
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 6, 2, 2, 2, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 1],
     [1, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-    [1, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-    [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 1],
+    [1, 2, 4, 2, 2, 2, 2, 2, 2, 2, 5, 2, 2, 2, 1],
+    [1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-    [1, 2, 2, 6, 2, 2, 4, 2, 2, 2, 2, 2, 6, 2, 1],
+    [1, 2, 2, 5, 2, 2, 4, 2, 2, 2, 2, 2, 6, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 1],
     [1, 2, 2, 2, 2, 2, 6, 2, 2, 2, 2, 2, 2, 2, 1],
-    [1, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+    [1, 4, 2, 5, 2, 2, 2, 2, 2, 2, 2, 5, 2, 2, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
 
@@ -42,13 +52,39 @@ export default class TileMap {
           this.#drawDirtGrass(ctx, column, row, this.tileSize);
         } else if (tile === 4) {
           this.#drawBone(ctx, column, row, this.tileSize);
+        } 
+        else if (tile ===7){
+          this.#drawTennisBall(ctx, column, row, this.tileSize);
+        }
+        else if (tile === 5) {
+          this.#drawPowerBall(ctx, column, row, this.tileSize);
         } else {
           this.#drawBlank(ctx, column, row, this.tileSize);
         }
       }
     }
   }
-
+  #drawPowerBall(ctx, column, row, size) {
+    this.tennisBallAnimationTimer--;
+    if (this.powerBallAnimationTimer === 0) {
+      this.powerBallAnimationTimer = this.powerBallAnimationTimerDefault;
+      if (this.powerBall == this.tennisGlow) {
+        this.powerBall = this.tennisBall;
+      } else {
+        this.powerBall = this.tennisGlow;
+      }
+    }
+    ctx.drawImage(this.powerBall, column * size, row * size, size, size);
+  }
+  #drawTennisBall(ctx, column, row, size){
+    ctx.drawImage(
+      this.tennisBall,
+      column * this.tileSize,
+      row * this.tileSize,
+      size,
+      size
+    );
+  }
   #drawDirt(ctx, column, row, size) {
     ctx.drawImage(
       this.dirt,
@@ -181,5 +217,17 @@ export default class TileMap {
       }
     }
     return false;
+  }
+  getPowerBall(x,y){
+    const row = y / this.tileSize;
+    const column = x / this.tileSize;
+    if (Number.isInteger(row) && Number.isInteger(column)){
+      const tile = this.map[row][column];
+      if (tile === 5){
+        this.map[row][column]= 2;
+        return true;
+      }
+    }
+return false;
   }
 }

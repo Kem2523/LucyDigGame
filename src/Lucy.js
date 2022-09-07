@@ -7,6 +7,7 @@ export default class Lucy {
     this.velocity = velocity;
     this.tileMap = tileMap;
 
+    
     this.currentMovingDirection = null;
     this.requestedMovingDirection = null;
 
@@ -16,6 +17,7 @@ export default class Lucy {
     this.lucyRotation = this.Rotation.right;
     this.lucyBarkSound = new Audio('../sounds/lucyBarking.mp3')
   
+    this.powerBallSound = new Audio('../sounds/Squeaky-toy-sound-effect.mp3')
     this.madeFirstMove = false;
 
     document.addEventListener("keydown", this.#keydown);
@@ -34,6 +36,8 @@ export default class Lucy {
     this.#move();
     this.#animate();
     this.#getBone();
+    this.#getPowerBall();
+
 
     const size = this.tileSize / 2;
 
@@ -49,13 +53,7 @@ export default class Lucy {
       );
 
     ctx.restore();
-    // ctx.drawImage(
-    //   this.lucyImages[this.lucyImageIndex],
-    //   this.x,
-    //   this.y,
-    //   this.tileSize,
-    //   this.tileSize
-    // );
+    
   }
 
   #loadLucyImages() {
@@ -178,5 +176,11 @@ export default class Lucy {
       this.lucyBarkSound.play();
 
     }
+  }
+  #getPowerBall(){
+   if (this.tileMap.getPowerBall(this.x, this.y)){
+//gophers will be scared if lucy eats powerball
+ this.powerBallSound.play();   
+}
   }
 }
