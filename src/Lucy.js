@@ -6,8 +6,9 @@ export default class Lucy {
     this.tileSize = tileSize;
     this.velocity = velocity;
     this.tileMap = tileMap;
+  
 
-    
+
     this.currentMovingDirection = null;
     this.requestedMovingDirection = null;
 
@@ -18,6 +19,10 @@ export default class Lucy {
     this.lucyBarkSound = new Audio('../sounds/lucyBarking.mp3')
   
     this.powerBallSound = new Audio('../sounds/Squeaky-toy-sound-effect.mp3')
+    this.powerBallActive = false;
+    this.powerBallAboutToExpire = false;
+    this.timers= [];
+    
     this.madeFirstMove = false;
 
     document.addEventListener("keydown", this.#keydown);
@@ -181,6 +186,21 @@ export default class Lucy {
    if (this.tileMap.getPowerBall(this.x, this.y)){
 //gophers will be scared if lucy eats powerball
  this.powerBallSound.play();   
+ this.powerBallActive = true;
+ this.powerBallAboutToExpire = false;
+ this.timers.forEach((timer) => clearTimeout(timer));
+ this.timers = [];
+
+ let powerBallTimer = setTimeout(() => {
+this.powerBallActive=false;
+this.powerBallAboutToExpire = false;
+ }, 1000 *6)
+ this.timers.push(powerBallTimer);
+ let powerBallAboutToExpireTimer = setTimeout(()=>{
+this.powerBallAboutToExpire= true;
+
+ }, 1000* 3);
+ this.timers.push(powerBallAboutToExpireTimer);
 }
   }
 }

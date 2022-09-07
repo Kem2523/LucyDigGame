@@ -10,10 +10,28 @@ const tileMap = new TileMap(tileSize);
 const lucy = tileMap.getLucy(velocity);
 const enemies = tileMap.getEnemies(velocity);
 
+let gameOver= false;
+let gameWin = false;
+const gameOverSound = new Audio ('../sounds/loser.mp3');
+const gameWinSound = new Audio ('../sounds/tadaa.mp3')
+
 function gameLoop() {
   tileMap.draw(ctx);
   lucy.draw(ctx);
-  enemies.forEach((enemy) => enemy.draw(ctx, pause()));
+  enemies.forEach((enemy) => enemy.draw(ctx, pause(), lucy));
+  checkGameOver();
+}
+
+function checkGameOver(){
+  if(!gameOver){
+    gameOver = isGameOver();
+    if(gamOver){
+      gameOverSound.play();
+    }
+  }
+}
+function isGameOver(){
+  return enemies.some(enemy => !lucy.powerBallActive && enemy.collideWith(lucy));
 }
 function pause(){
   return !lucy.madeFirstMove
