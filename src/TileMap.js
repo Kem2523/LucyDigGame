@@ -1,7 +1,8 @@
-import Lucy from "./Lucy.js";
-import Enemy from "./Enemy.js";
-import MovingDirection from "./MovingDirection.js";
 
+import Lucy from "./Lucy.js";
+import Enemy from "./Gopher.js";
+import MovingDirection from "./Move.js";
+// exports TileMap
 export default class TileMap {
   constructor(tileSize) {
     this.tileSize = tileSize;
@@ -25,10 +26,15 @@ export default class TileMap {
     this.powerBallAnimationTimerDefault = 60;
     this.powerBallAnimationTimer = this.powerBallAnimationTimerDefault;
   }
-
+// 1- border
+// 0 - Lucy
+// 2- dirt
+// 6-Gopher
+// 5- Ball
+// 4 - Bone
   map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 6, 2, 2, 2, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 1],
     [1, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
@@ -46,6 +52,7 @@ export default class TileMap {
     for (let row = 0; row < this.map.length; row++) {
       for (let column = 0; column < this.map[row].length; column++) {
         let tile = this.map[row][column];
+       //draws image on to TileMap
         if (tile === 2) {
           this.#drawDirt(ctx, column, row, this.tileSize);
         } else if (tile === 1) {
@@ -65,7 +72,7 @@ export default class TileMap {
     }
   }
   #drawPowerBall(ctx, column, row, size) {
-    this.tennisBallAnimationTimer--;
+    this.powerBallAnimationTimer--;
     if (this.powerBallAnimationTimer === 0) {
       this.powerBallAnimationTimer = this.powerBallAnimationTimerDefault;
       if (this.powerBall == this.tennisGlow) {
@@ -113,12 +120,12 @@ export default class TileMap {
       size
     );
   }
-
+// fills the canvas so it is black if there is no image
   #drawBlank(ctx, column, row, size) {
     ctx.fillstyle = "black";
     ctx.fillRect(column * this.tileSize, row * this.tileSize, size, size);
   }
-
+//adds Lucy to the tileMap
   getLucy(velocity) {
     for (let row = 0; row < this.map.length; row++) {
       for (let column = 0; column < this.map[row].length; column++) {
@@ -136,6 +143,7 @@ export default class TileMap {
       }
     }
   }
+  //allows for lucy to attack the gophers
   getEnemies(velocity) {
     const enemies = [];
 
@@ -158,12 +166,14 @@ export default class TileMap {
     }
     return enemies;
   }
+//width and height of canvas depending on Map Array.  width = column # in the array * the tiile size which was 50
+// height = # rows or arrays in map array * the tileSize which is 50.
 
   setCanvasSize(canvas) {
     canvas.width = this.map[0].length * this.tileSize;
     canvas.height = this.map.length * this.tileSize;
   }
-
+//controls lucy and gophers collision with the walls of canvas
   didCollideWithEnvironment(x, y, direction) {
     if (direction == null) {
       return;
@@ -207,6 +217,15 @@ export default class TileMap {
     }
     return false;
   }
+//winning the game means there must be 0 bones left
+  didWin(){
+    return this.#bonesLeft() === 0;
+  }
+
+  //checks in tileMap array if there are any bones (4) left
+  #bonesLeft(){
+    return this.map.flat().filter(tile => tile ===4).length;
+  }
   getBone(x, y) {
     const row = y / this.tileSize;
     const column = x / this.tileSize;
@@ -230,4 +249,13 @@ export default class TileMap {
     }
 return false;
   }
+
 }
+let lucyCharacter = document.createElement('img')
+lucyCharacter.src = '../images/lucyimage.png'
+lucyCharacter.style.position = 'fixed'
+lucyCharacter.style.left = '170px'
+lucyCharacter.style.bottom = '535px'
+lucyCharacter.style.width = "250px"
+document.body.append(lucyCharacter)
+
