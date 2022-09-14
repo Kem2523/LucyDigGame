@@ -15,8 +15,8 @@ export default class TileMap {
     this.tennisBall = new Image();
     this.tennisBall.src = "images/tennisBall.png";
 
-    this.dirtGrass = new Image();
-    this.dirtGrass.src = "images/dirt.png";
+    this.dirtBorder = new Image();
+    this.dirtBorder.src = "images/dirtborder.png";
 
     this.bone = new Image();
     this.bone.src = "images/bone.png";
@@ -55,7 +55,7 @@ export default class TileMap {
         if (tile === 2) {
           this.#drawDirt(ctx, column, row, this.tileSize);
         } else if (tile === 1) {
-          this.#drawDirtGrass(ctx, column, row, this.tileSize);
+          this.#drawBorder(ctx, column, row, this.tileSize);
         } else if (tile === 4) {
           this.#drawBone(ctx, column, row, this.tileSize);
         } else if (tile === 7) {
@@ -98,7 +98,7 @@ export default class TileMap {
       size
     );
   }
-  #drawDirtGrass(ctx, column, row, size) {
+  #drawBorder(ctx, column, row, size) {
     ctx.drawImage(
       this.dirtGrass,
       column * this.tileSize,
