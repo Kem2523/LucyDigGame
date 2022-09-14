@@ -14,14 +14,14 @@ export default class Lucy {
     this.lucyAnimationTimer = null;
 
     this.lucyRotation = this.Rotation.right;
-    this.lucyBarkSound = new Audio("../sounds/growl.mp3");
+    this.lucyBarkSound = new Audio("sounds/growl.mp3");
 
-    this.powerBallSound = new Audio("../sounds/Squeaky-toy-sound-effect.mp3");
+    this.powerBallSound = new Audio("sounds/Squeaky-toy-sound-effect.mp3");
     this.powerBallActive = false;
     this.powerBallAboutToExpire = false;
     this.timers = [];
 
-    this.fightGopherSound = new Audio("../sounds/growl.mp3")
+    this.fightGopherSound = new Audio("sounds/growl.mp3")
 
     this.madeFirstMove = false;
 
@@ -64,16 +64,16 @@ export default class Lucy {
 //lucy animation so it appears she is walking
   #loadLucyImages() {
     const lucyImage1 = new Image();
-    lucyImage1.src = "../images/lucy1.png";
+    lucyImage1.src = "images/lucy1.png";
 
     const lucyImage2 = new Image();
-    lucyImage2.src = "../images/lucy2.png";
+    lucyImage2.src = "images/lucy2.png";
 
     const lucyImage3 = new Image();
-    lucyImage3.src = "../images/lucy3.png";
+    lucyImage3.src = "images/lucy3.png";
 
     const lucyImage4 = new Image();
-    lucyImage4.src = "../images/lucy4.png";
+    lucyImage4.src = "images/lucy4.png";
 //array of the images to loop through
     this.lucyImages = [lucyImage1, lucyImage2, lucyImage3, lucyImage4];
 

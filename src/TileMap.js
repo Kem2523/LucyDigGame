@@ -1,4 +1,3 @@
-
 import Lucy from "./Lucy.js";
 import Enemy from "./Gopher.js";
 import MovingDirection from "./Move.js";
@@ -8,30 +7,30 @@ export default class TileMap {
     this.tileSize = tileSize;
 
     this.dirt = new Image();
-    this.dirt.src = "../images/dirt2.png";
+    this.dirt.src = "images/dirt2.png";
 
     this.tennisGlow = new Image();
-    this.tennisGlow.src = "../images/tennisGlow.png";
-   
+    this.tennisGlow.src = "images/tennisGlow.png";
+
     this.tennisBall = new Image();
-    this.tennisBall.src= "../images/tennisBall.png"
+    this.tennisBall.src = "images/tennisBall.png";
 
     this.dirtGrass = new Image();
-    this.dirtGrass.src = "../images/dirtGrass.png";
+    this.dirtGrass.src = "images/dirtGrass.png";
 
     this.bone = new Image();
-    this.bone.src = "../images/bone.png";
+    this.bone.src = "images/bone.png";
 
     this.powerBall = this.tennisGlow;
     this.powerBallAnimationTimerDefault = 60;
     this.powerBallAnimationTimer = this.powerBallAnimationTimerDefault;
   }
-// 1- border
-// 0 - Lucy
-// 2- dirt
-// 6-Gopher
-// 5- Ball
-// 4 - Bone
+  // 1- border
+  // 0 - Lucy
+  // 2- dirt
+  // 6-Gopher
+  // 5- Ball
+  // 4 - Bone
   map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
@@ -52,18 +51,16 @@ export default class TileMap {
     for (let row = 0; row < this.map.length; row++) {
       for (let column = 0; column < this.map[row].length; column++) {
         let tile = this.map[row][column];
-       //draws image on to TileMap
+        //draws image on to TileMap
         if (tile === 2) {
           this.#drawDirt(ctx, column, row, this.tileSize);
         } else if (tile === 1) {
           this.#drawDirtGrass(ctx, column, row, this.tileSize);
         } else if (tile === 4) {
           this.#drawBone(ctx, column, row, this.tileSize);
-        } 
-        else if (tile ===7){
+        } else if (tile === 7) {
           this.#drawTennisBall(ctx, column, row, this.tileSize);
-        }
-        else if (tile === 5) {
+        } else if (tile === 5) {
           this.#drawPowerBall(ctx, column, row, this.tileSize);
         } else {
           this.#drawBlank(ctx, column, row, this.tileSize);
@@ -83,7 +80,7 @@ export default class TileMap {
     }
     ctx.drawImage(this.powerBall, column * size, row * size, size, size);
   }
-  #drawTennisBall(ctx, column, row, size){
+  #drawTennisBall(ctx, column, row, size) {
     ctx.drawImage(
       this.tennisBall,
       column * this.tileSize,
@@ -120,12 +117,12 @@ export default class TileMap {
       size
     );
   }
-// fills the canvas so it is black if there is no image
+  // fills the canvas so it is black if there is no image
   #drawBlank(ctx, column, row, size) {
     ctx.fillstyle = "black";
     ctx.fillRect(column * this.tileSize, row * this.tileSize, size, size);
   }
-//adds Lucy to the tileMap
+  //adds Lucy to the tileMap
   getLucy(velocity) {
     for (let row = 0; row < this.map.length; row++) {
       for (let column = 0; column < this.map[row].length; column++) {
@@ -166,14 +163,14 @@ export default class TileMap {
     }
     return enemies;
   }
-//width and height of canvas depending on Map Array.  width = column # in the array * the tiile size which was 50
-// height = # rows or arrays in map array * the tileSize which is 50.
+  //width and height of canvas depending on Map Array.  width = column # in the array * the tiile size which was 50
+  // height = # rows or arrays in map array * the tileSize which is 50.
 
   setCanvasSize(canvas) {
     canvas.width = this.map[0].length * this.tileSize;
     canvas.height = this.map.length * this.tileSize;
   }
-//controls lucy and gophers collision with the walls of canvas
+  //controls lucy and gophers collision with the walls of canvas
   didCollideWithEnvironment(x, y, direction) {
     if (direction == null) {
       return;
@@ -217,14 +214,14 @@ export default class TileMap {
     }
     return false;
   }
-//winning the game means there must be 0 bones left
-  didWin(){
+  //winning the game means there must be 0 bones left
+  didWin() {
     return this.#bonesLeft() === 0;
   }
 
   //checks in tileMap array if there are any bones (4) left
-  #bonesLeft(){
-    return this.map.flat().filter(tile => tile ===4).length;
+  #bonesLeft() {
+    return this.map.flat().filter((tile) => tile === 4).length;
   }
   getBone(x, y) {
     const row = y / this.tileSize;
@@ -237,25 +234,23 @@ export default class TileMap {
     }
     return false;
   }
-  getPowerBall(x,y){
+  getPowerBall(x, y) {
     const row = y / this.tileSize;
     const column = x / this.tileSize;
-    if (Number.isInteger(row) && Number.isInteger(column)){
+    if (Number.isInteger(row) && Number.isInteger(column)) {
       const tile = this.map[row][column];
-      if (tile === 5){
-        this.map[row][column]= 2;
+      if (tile === 5) {
+        this.map[row][column] = 2;
         return true;
       }
     }
-return false;
+    return false;
   }
-
 }
-let lucyCharacter = document.createElement('img')
-lucyCharacter.src = '../images/lucyimage.png'
-lucyCharacter.style.position = 'fixed'
-lucyCharacter.style.left = '170px'
-lucyCharacter.style.bottom = '535px'
-lucyCharacter.style.width = "250px"
-document.body.append(lucyCharacter)
-
+let lucyCharacter = document.createElement("img");
+lucyCharacter.src = "images/lucyimage.png";
+lucyCharacter.style.position = "fixed";
+lucyCharacter.style.left = "170px";
+lucyCharacter.style.bottom = "535px";
+lucyCharacter.style.width = "250px";
+document.body.append(lucyCharacter);

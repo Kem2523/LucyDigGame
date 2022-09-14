@@ -15,8 +15,8 @@ const enemies = tileMap.getEnemies(velocity);
 
 let gameOver = false;
 let gameWin = false;
-const gameOverSound = new Audio("../sounds/loser.mp3");
-const gameWinSound = new Audio("../sounds/tadaa.mp3");
+const gameOverSound = new Audio("sounds/loser.mp3");
+const gameWinSound = new Audio("sounds/tadaa.mp3");
 //loop to redraw screen continuously
 function gameLoop() {
   tileMap.draw(ctx);

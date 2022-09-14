@@ -128,13 +128,13 @@ return true;
 
 #loadImages() {
     this.normalGopher = new Image();
-    this.normalGopher.src = "../images/Gopher.png";
+    this.normalGopher.src = "images/Gopher.png";
 
     this.scaredGopher = new Image();
-    this.scaredGopher.src = "../images/scaredGopher.png";
+    this.scaredGopher.src = "images/scaredGopher.png";
 
     this.blinkGopher = new Image();
-    this.blinkGopher.src = "../images/blinkGopher.png";
+    this.blinkGopher.src = "images/blinkGopher.png";
 
     this.image = this.normalGopher;
   }
